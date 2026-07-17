@@ -4,7 +4,16 @@
 
 Originally written by on Zbigniew Kacprzak and hosted at: https://eclipse.kacprzak.org/
 
-But that disappeared as did its author. I had an old copy of the source lying around so got it working on my box, and here it is. I can't support this as I'm too busy, nor well versed in Eclipse plugins or Java. But this is where I got to.
+But that disappeared as did its author. 
+
+For the record:
+
+- https://sourceforge.net/u/zbika73/profile/
+- https://sourceforge.net/p/pydev/discussion/293649/thread/7392f68e/
+- https://disqus.com/by/zbigniewkacprzak/?
+- https://www.linkedin.com/in/zbigniew-kacprzak-2029352/
+
+I had an old copy of the source lying around so got it working on my box, and here it is. I can't support this as I'm too busy, nor well versed in Eclipse plugins or Java. But this is where I got to.
 
 Eclipse Preparations
 --------------------
