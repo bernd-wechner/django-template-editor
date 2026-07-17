@@ -1,0 +1,44 @@
+#!/bin/bash
+# Publishes the update site to a target directory using rsync
+
+set -euo pipefail
+
+default_web_root="/var/www/html"
+web_root="${1:-$default_web_root}"
+
+# Helper for error messages
+die() {
+    echo "❌ Error: $1" >&2
+    exit 1
+}
+
+success() {
+    echo "✅ $1"
+}
+
+[ -d "$web_root" ] || die "Web root directory not found: $web_root"
+
+# Resolve source site directory
+site_dir="$(realpath "$(dirname "$0")")/site"
+[ -d "$site_dir" ] || die "Site directory not found: $site_dir"
+
+# Determine target directory
+target_dir="$web_root/$(basename "$(dirname "$site_dir")")"
+
+# Check for root privileges
+if [ "$(id -u)" -ne 0 ]; then
+    die "This script must be run as root to write to $web_root and set ownership/permissions."
+fi
+
+# Create target directory if needed
+mkdir -p "$target_dir" || die "Failed to create target directory: $target_dir"
+
+# Sync site contents
+rsync -a "$site_dir/" "$target_dir/" || die "rsync failed"
+
+# Set ownership and permissions
+chown -R www-data:www-data "$target_dir" || die "Failed to set ownership"
+find "$target_dir" -type f -exec chmod 644 {} + || die "Failed to set file permissions"
+find "$target_dir" -type d -exec chmod 755 {} + || die "Failed to set directory permissions"
+
+success "Update site published successfully to: $target_dir"

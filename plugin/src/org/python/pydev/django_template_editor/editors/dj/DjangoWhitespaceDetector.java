@@ -1,0 +1,11 @@
+package org.python.pydev.django_template_editor.editors.dj;
+
+import org.eclipse.jface.text.rules.IWhitespaceDetector;
+
+public class DjangoWhitespaceDetector implements IWhitespaceDetector {
+
+	public boolean isWhitespace(char c) {
+		return Character.isWhitespace(c);
+//		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
+	}
+}

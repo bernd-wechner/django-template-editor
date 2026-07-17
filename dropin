@@ -1,0 +1,49 @@
+#!/bin/bash
+# Publishes the plugin as an Eclipse dropin
+
+set -euo pipefail
+
+# Helper for error messages
+die() {
+    echo "❌ Error: $1" >&2
+    exit 1
+}
+
+success() {
+    echo "✅ $1"
+}
+
+# 1. Check if 'eclipse' is in PATH and resolve path in one go
+# Using || true prevents 'set -e' from killing the script here
+eclipse_path=$(command -v eclipse || true)
+[ -n "$eclipse_path" ] || die "'eclipse' not found in PATH"
+
+# 2. Resolve Eclipse home
+# realpath can fail if the file doesn't exist; we wrap it to stay safe
+eclipse_real=$(realpath "$eclipse_path" 2>/dev/null || die "Could not resolve real path of $eclipse_path")
+eclipse_home=$(dirname "$eclipse_real")
+[ -d "$eclipse_home" ] || die "Eclipse home directory not found: $eclipse_home"
+
+# 3. Check dropins directory
+dropin_dir="$eclipse_home/dropins"
+[ -d "$dropin_dir" ] || die "Dropins directory not found: $dropin_dir"
+
+# 4. Resolve site directory relative to script location
+script_dir=$(dirname "$(realpath "$0" 2>/dev/null || echo ".")")
+site_dir="$script_dir/site"
+[ -d "$site_dir" ] || die "Site directory not found: $site_dir"
+
+# 5. Check plugins directory inside site
+plugins_dir="$site_dir/plugins"
+[ -d "$plugins_dir" ] || die "Plugins directory not found: $plugins_dir"
+
+# 6. Construct target dropin path
+# We use a fallback for basename to ensure variable assignment doesn't crash
+project_name=$(basename "$(dirname "$site_dir")" || echo "unknown_plugin")
+my_dropin_dir="$dropin_dir/$project_name/eclipse"
+
+# Create directory and sync
+mkdir -p "$my_dropin_dir"
+rsync -a "$plugins_dir" "$my_dropin_dir"
+
+success "Plugin published successfully to: $my_dropin_dir"
