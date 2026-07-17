@@ -1,6 +1,10 @@
 # Django Template Editor for the Eclipse IDE
 
+## History
 
+Originally written by on Zbigniew Kacprzak and hosted at: https://eclipse.kacprzak.org/
+
+But that disappeared as did its author. I had an old copy of the source lying around so got it working on my box, and here it is. I can't support this as I'm too busy, nor well versed in Eclipse plugins or Java. But this is where I got to.
 
 Eclipse Preparations
 --------------------
@@ -53,18 +57,19 @@ Install
 Install the django editor from the updates folder:
 
 In Eclipse:
-    Help > Install New Software...
-    Click Manage
-    Click Add
-    Name: Django Editor
-    Location: the org.python.pydev.django_template_editor.updates that you built above
-    Work With: Django Editor
-    Select Django Templates Editor
-    Click Finish
+
+1. **Help > Install New Software...**
+2. Click **Manage**
+3. Click **Add**
+4. Name: **Django Editor**
+5. Location: the org.python.pydev.django_template_editor.updates that you built above
+6. Work With: **Django Editor**
+7. Select **Django Templates Editor**
+8. Click **Finish**
 
 ## An Eclipse "Software" Primer
 
-I wouldn't be the first or only one to find Eclipse's terminology and structure more than a little arcane and nebulous.  To with a really quick primer on some of the terms and context:
+I wouldn't be the first or only one to find Eclipse's terminology and structure more than a little arcane and nebulous.  To wit, a really quick primer on some of the terms and context:
 
 - Eclipse itself:
   - is in fact a software platform written in Java and for Java, upon which you can build software products.
